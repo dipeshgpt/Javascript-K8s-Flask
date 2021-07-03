@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Javascript integration</title>
+    </head>
+    <style>
+        body{
+            background-image: url('/static/bgimage.jpg');
+            background-size: cover;
+            text-align: center;
+            font-family: cursive;
+            color: antiquewhite;
+        }
+        #input_cmd_div{
+            margin-top: 70px;
+        }
+        #input_cmd{
+            border-radius: 7px;
+            width: 400px;
+            height: 30px;
+            font-family: cursive;
+            
+        }
+        #btn-run{
+            margin-top: 20px;
+            width: 80px;
+            height: 30px;
+            border-radius: 200px;
+        }
+        #btn-run:hover{
+            background-color: rgb(17, 197, 17);
+        }
+        #pre-tag{
+            border: 10px;
+            text-align: center;
+
+        }
+
+    
+    </style>
+    <body>
+        <div id="header-nav">
+            <header>
+                <nav><h1>Integrating Javascript with docker/k8s</h1></nav>
+            </header>
+        </div>
+        <div id='input_cmd_div'>
+            <h3>Your Query: </h3>
+            <input id='input_cmd' placeholder="Enter docker command" name="input_query" type="text" /><br>
+            <button id="btn-run" onclick="run()">Run</button>
+        </div>
+            <pre id="pre-tag">
+                <h2>Output will be shown here!!</h2>
+
+
+            </pre>
+        <script>
+            function run(){
+                var query = document.getElementById("input_cmd").value;
+                document.getElementById("input_cmd").value = "";
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET","http://127.0.0.1:5000/cmd_output?input_query=" + query,true);
+                xhr.send();
+                xhr.onload = function(){
+                    var output = xhr.responseText;
+                    document.getElementById("pre-tag").innerHTML = output;
+                }
+                
+            }
+
+        </script>
+    </body>
+</html>
